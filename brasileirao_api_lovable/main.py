@@ -226,3 +226,20 @@ def scenarios(req: ScenarioRequest):
         "classificacao_cenario": _records(scenario),
         "deltas": _records(deltas),
     }
+
+@app.get("/api/analise/{serie}")
+def analise_lovable(
+    serie: str,
+    fonte: str = "public",
+    modelo: str = "Automático",
+    n: int = 10000,
+    seed: int = 2026,
+):
+    return projections(
+        serie=serie.upper(),
+        simulacoes=n,
+        semente=seed,
+        modelo=modelo,
+        demonstracao=fonte.lower() in ("demo", "demonstracao"),
+    )
+    
